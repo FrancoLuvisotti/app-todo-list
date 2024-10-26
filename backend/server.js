@@ -13,12 +13,12 @@ const app = express();
 const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 5000 por defecto
 
 // Middleware
-app.use(cors({
-    origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Conten-Type', 'Authorization'],
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+//     allowedHeaders: ['Conten-Type', 'Authorization'],
+//     credentials: true,
+// }));
 
 app.option('*', cors({
     origin: 'https://app-todo-list-1.onrender.com', //URl del frontend

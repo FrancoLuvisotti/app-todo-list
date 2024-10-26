@@ -18,7 +18,7 @@ async function handleLogin(event) {
 
     try {
         // Hacer la solicitud de inicio de sesión al backend
-        const response = await fetch('https://app-todo-list-1.onrender.com/auth/login', {
+        const response = await fetch('https://todo-app-list-1.onrender.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

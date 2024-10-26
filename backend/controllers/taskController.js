@@ -1,5 +1,4 @@
 const Task = require('../models/task');
-const mongoose = require('mongoose');
 
 // Crear una tarea
 const createTask = async (req, res) => {

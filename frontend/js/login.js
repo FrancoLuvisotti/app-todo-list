@@ -18,7 +18,7 @@ async function handleLogin(event) {
 
     try {
         // Hacer la solicitud de inicio de sesión al backend
-        const response = await fetch('http://localhost:5000/auth/login', {
+        const response = await fetch('https://app-todo-list-1.onrender.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ async function handleLogin(event) {
             const token = data.token; // Obtener el token JWT
             localStorage.setItem('jwtToken', token); // Guardar el token en localStorage
             alert('Inicio de sesión exitoso!');
-            window.location.href = '../views/index.html'; // Redirigir a la página principal
+            window.location.href = '../views/tasks.html'; // Redirigir a la página principal
         } else {
             const errorData = await response.json();
             alert(`Error: ${errorData.message}`); // Mostrar mensaje de error

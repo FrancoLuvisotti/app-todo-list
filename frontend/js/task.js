@@ -5,11 +5,11 @@ async function fetchTasks() {
     const token = localStorage.getItem('jwtToken'); // Obtener el token desde localStorage
 
     if (!token) {
-        window.location.href = './login.html';
+        window.location.href = './index.html';
     }
 
     try {
-        const response = await fetch('http://localhost:5000/tasks', {
+        const response = await fetch('https://app-todo-list-1.onrender.com/tasks', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ async function addTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch('http://localhost:5000/tasks', {
+        const response = await fetch('https://app-todo-list-1.onrender.com/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ async function completeTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}/complete`, {
+        const response = await fetch(`https://app-todo-list-1.onrender.com/tasks/${taskId}/complete`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ async function editTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        const response = await fetch(`https://app-todo-list-1.onrender.com/tasks/${taskId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -234,7 +234,7 @@ async function deleteTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        const response = await fetch(`https://app-todo-list-1.onrender.com/tasks/${taskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}` // Incluyendo el token JWT

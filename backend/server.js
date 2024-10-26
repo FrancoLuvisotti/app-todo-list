@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 50
 
 // Middleware
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', //URl del frontend
+    origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
 }));
@@ -40,5 +40,5 @@ app.get('/', (req, res) => {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on https://localhost:${PORT}`);
 });

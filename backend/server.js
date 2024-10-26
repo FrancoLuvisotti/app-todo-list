@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 50
 app.use(cors({
     origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Conten-Type', 'Authorization'],
     credentials: true,
 }));
 

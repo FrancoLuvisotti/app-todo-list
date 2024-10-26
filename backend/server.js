@@ -37,7 +37,7 @@ app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
 
 // Ruta de prueba
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/login.html'));
+    res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
 });
 
 // Iniciar el servidor

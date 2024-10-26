@@ -5,7 +5,7 @@ async function fetchTasks() {
     const token = localStorage.getItem('jwtToken'); // Obtener el token desde localStorage
 
     if (!token) {
-        window.location.href = './index.html';
+        window.location.href = '../views/index.html';
     }
 
     try {

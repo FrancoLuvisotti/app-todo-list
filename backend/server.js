@@ -5,6 +5,7 @@ const taskRoutes = require('./routes/taskRoutes');
 const authRoutes = require('./routes/authRoutes');
 const bodyParser = require('body-parser');
 const authenticate = require('./middlewares/authMiddleware');
+const path = require('path');
 
 require('dotenv').config(); // Cargar variables de entorno desde .env
 

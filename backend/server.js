@@ -44,7 +44,6 @@ connectDB();
 app.use('/auth', authRoutes); // Rutas de autenticación
 app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
 
-// Ruta de prueba
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
 });
@@ -56,7 +55,7 @@ app.get('/css/:file', (req, res) => {
 
 app.get('/js/:file', (req, res) => {
     const file = req.params.file;
-    res.sendFile(path.join(__dirname, '../frontend/js', file));
+    res.sendFile(path.join(__dirname, '../frontend/js', file));
 });
 
 // Iniciar el servidor

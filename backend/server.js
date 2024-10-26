@@ -20,6 +20,13 @@ app.use(cors({
     credentials: true,
 }));
 
+app.option('*', cors({
+    origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Conten-Type', 'Authorization'],
+    preflightContinue: true,
+}));
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear formularios URL-encoded

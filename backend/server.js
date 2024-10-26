@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 50
 const corsOption = {
     origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Conten-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     preflightContinue: true,
 };
 
@@ -53,7 +53,7 @@ app.use('/auth', authRoutes); // Rutas de autenticación
 app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
+    res.sendFile(path.join(__dirname,'../frontend/views/index.html'));
 });
 
 app.get('/css/:file', (req, res) => {

@@ -23,6 +23,15 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear formularios URL-encoded
 app.use(express.static(path.join(__dirname, '../frontend')));
+app.use((req, res, next) => {
+    if (req.url.endsWith('.css')) {
+        res.type('text/css');
+    }
+    if (req.url.endsWith('.js')) {
+        res.type('text/javascript');
+    }
+    next();
+})
 // app.use((req, res, next) => {
 //     res.set('Cache-Control', 'no-store, no-caches, must-revalidate, private');
 //     next();
@@ -38,6 +47,16 @@ app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
 // Ruta de prueba
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
+});
+
+app.get('/css/:file', (req, res) => {
+    const file = req.params.file;
+    res.sendFile(path.join(__dirname, '../frontend/css', file));
+});
+
+app.get('/js/:file', (req, res) => {
+    const file = req.params.file;
+    res.sendFile(path.join(__dirname, '../frontend/js', file));
 });
 
 // Iniciar el servidor

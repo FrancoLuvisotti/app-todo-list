@@ -19,14 +19,14 @@ const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 50
 //     allowedHeaders: ['Conten-Type', 'Authorization'],
 //     credentials: true,
 // }));
-
-app.option('*', cors({
+const corsOption = {
     origin: 'https://app-todo-list-1.onrender.com', //URl del frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Conten-Type', 'Authorization'],
     preflightContinue: true,
-}));
+};
 
+app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear formularios URL-encoded

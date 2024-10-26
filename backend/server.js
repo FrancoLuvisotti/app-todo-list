@@ -56,6 +56,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'../frontend/views/index.html'));
 });
 
+app.get('/tasks', (req, res) => {
+    res.sendFile(path.join(__dirname,'../frontend/views/tasks.html'));
+});
+
 app.get('/css/:file', (req, res) => {
     const file = req.params.file;
     res.sendFile(path.join(__dirname, '../frontend/css', file));

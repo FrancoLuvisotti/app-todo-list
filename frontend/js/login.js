@@ -33,7 +33,7 @@ async function handleLogin(event) {
             const token = data.token; // Obtener el token JWT
             localStorage.setItem('jwtToken', token); // Guardar el token en localStorage
             alert('Inicio de sesión exitoso!');
-            window.location.href = '../views/tasks.html'; // Redirigir a la página principal
+            window.location.href = 'https://app-todo-list-1.onrender.com/tasks'; // Redirigir a la página principal
         } else {
             const errorData = await response.json();
             alert(`Error: ${errorData.message}`); // Mostrar mensaje de error

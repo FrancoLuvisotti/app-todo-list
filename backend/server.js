@@ -37,7 +37,7 @@ app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
 
 // Ruta de prueba
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.sendFile(path.join(__dirname, '../frontend/views/login.html'));
 });
 
 // Iniciar el servidor

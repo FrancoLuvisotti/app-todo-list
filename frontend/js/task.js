@@ -9,7 +9,7 @@ async function fetchTasks() {
     }
 
     try {
-        const response = await fetch('https://todo-app-list.onrender.com/tasks', {
+        const response = await fetch('https://todo-app-list-dvov.onrender.com/tasks', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ async function addTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch('https://todo-app-list.onrender.com/tasks', {
+        const response = await fetch('https://todo-app-list-dvov.onrender.com/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ async function completeTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`https://todo-app-list.onrender.com/tasks/${taskId}/complete`, {
+        const response = await fetch(`https://todo-app-list-dvov.onrender.com/tasks/${taskId}/complete`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ async function editTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`https://todo-app-list.onrender.com/tasks/${taskId}`, {
+        const response = await fetch(`https://todo-app-list-dvov.onrender.com/tasks/${taskId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -234,7 +234,7 @@ async function deleteTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`https://todo-app-list.onrender.com/tasks/${taskId}`, {
+        const response = await fetch(`https://todo-app-list-dvov.onrender.com/tasks/${taskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}` // Incluyendo el token JWT

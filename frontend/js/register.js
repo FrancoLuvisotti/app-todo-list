@@ -18,7 +18,7 @@ async function handleRegister(event) {
 
     try {
         // Hacer la solicitud de registro al backend
-        const response = await fetch('https://todo-app-list.onrender.com/auth/register', {
+        const response = await fetch('https://todo-app-list-dvov.onrender.com/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

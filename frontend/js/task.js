@@ -5,7 +5,7 @@ async function fetchTasks() {
     const token = localStorage.getItem('jwtToken'); // Obtener el token desde localStorage
 
     if (!token) {
-        window.location.href = '../views/index.html';
+        window.location.href = 'https://app-todo-list-1.onrender.com/views/index.html';
     }
 
     try {

@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || '123456';
 // POST - Ruta para el registro de usuarios
 router.post('/register', async (req, res) => {
 
-    res.setHeader('Acces-Control-Allow-Origin', 'https://app-todo-list-1.onrender.com')
+    res.setHeader('Acces-Control-Allow-Origin', 'https://app-todo-list-1.onrender.com');
     const { username, email, password } = req.body;
 
     //imprimir los datos recibidos
@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
     // POST - Ruta para el inicio de sesión
     router.post('/login', async (req, res) => {
         
-        res.setHeader('Acces-Control-Allow-Origin', 'https://app-todo-list-1.onrender.com')
+        res.setHeader('Acces-Control-Allow-Origin', 'https://app-todo-list-1.onrender.com');
         const { email, password } = req.body;
 
         // Verificación de los campos requeridos

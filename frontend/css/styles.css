@@ -1,0 +1,116 @@
+body {
+    background: #333333;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#task-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px; /* Espaciado entre las tarjetas */
+    justify-content: center;
+}
+
+/* Estilos de las tarjetas */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Efecto de hover */
+    border: 1px solid #ddd; /* Borde suave alrededor de la tarjeta */
+    background-color: #fff;
+}
+
+/* Efecto de hover */
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card-header {
+    background-color: #f7f7f7; /* Fondo claro para el encabezado */
+    font-weight: bold; /* Hacer el texto más prominente */
+}
+
+.card-body {
+    padding: 15px; /* Padding alrededor del contenido */
+}
+
+.card-text {
+    margin-bottom: 10px; /* Espaciado entre los elementos de texto */
+}
+
+.badge{
+    margin-bottom: 3px;
+}
+
+.navbar{
+    border: solid 1px black;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    z-index: 1000;
+    background-color: #c5c4c4;
+}
+
+.nav-item {
+    position: relative; /* Asegúrate de que el elemento tenga un contexto de posicionamiento */
+}
+
+.nav-link.active {
+    background-color: #bebe3e; /* Cambia a un color que resalte el botón activo */
+    color: #fff; /* Asegúrate de que el texto sea visible */
+    font-weight: bold; /* Hacer que el texto del botón activo se destaque */
+    border-radius: 5px; /* Bordes redondeados para el botón activo */
+}
+
+.pendiente {
+    padding: 2px 5px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    #task-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+    }
+}
+
+@media (max-width: 576px) {
+    #task-list {
+        grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
+    }
+
+    .card {
+        min-width: 100%; /* Asegúrate de que ocupe el ancho completo */
+        margin: 0 10px; /* Espaciado horizontal */
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        max-height: 150px;
+        overflow-y: auto; /* Scroll interno si el contenido es largo */
+    }
+
+    .card .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}

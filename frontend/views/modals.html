@@ -1,0 +1,117 @@
+<!-- Modal para registro -->
+<div class="modal fade" id="register-modal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form" novalidate>
+                    <div class="mb-3">
+                        <label for="register-username" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="register-username" placeholder="Tu nombre de usuario" required>
+                        <div class="invalid-feedback">Por favor, ingresa un nombre de usuario.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="register-email" placeholder="tuemail@ejemplo.com" required>
+                        <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="register-password" required>
+                        <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Registrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para agregar tarea -->
+<div class="modal fade" id="add-task-modal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTaskModalLabel">Agregar Tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-task-form" novalidate>
+                    <div class="mb-3">
+                        <label for="task-title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="task-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="task-description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="task-description" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="addTask(event)">Agregar Tarea</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar tarea -->
+<div class="modal fade" id="edit-task-modal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTaskModalLabel">Editar Tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-task-form" novalidate>
+                    <input type="hidden" id="edit-task-id">
+                    <div class="mb-3">
+                        <label for="edit-task-title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="edit-task-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-task-description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="edit-task-description" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-warning" onclick="editTask(event)">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de alerta -->
+ <!-- Modal de alerta genérico -->
+<div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Mensaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="alert-modal-body">
+                <!-- Mensaje de alerta aquí -->
+            </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para cerrar sesión -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas cerrar sesión?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" id="confirmLogout">Sí, cerrar sesión</button>
+            </div>
+        </div>
+    </div>
+</div>

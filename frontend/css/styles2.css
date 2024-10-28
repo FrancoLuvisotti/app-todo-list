@@ -1,0 +1,80 @@
+body {
+    background: #333333;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contenedor {
+    max-width: 800px; /* Ajusta el ancho total */
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo {
+    width: 150px; /* Aumenta el tamaño del logo */
+    margin-bottom: 20px;
+}
+
+.message{
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.welcome-message {
+    font-size: 20px;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem; /* Espaciado entre tarjetas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Efecto de hover */
+}
+
+.card:hover {
+    transform: scale(1.02); /* Efecto de ampliación al pasar el ratón */
+}
+
+.card-body {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+h1 {
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #e63946;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #d62839;
+}
+
+.btn-success {
+    background-color: #1d3557;
+}
+
+.btn-success:hover {
+    background-color: #457b9d;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+/* Estilo para alinear el mensaje */
+.welcome-message {
+    padding: 20px; /* Espaciado alrededor del mensaje */
+    margin-left: 20px; /* Espaciado a la izquierda del mensaje */
+}

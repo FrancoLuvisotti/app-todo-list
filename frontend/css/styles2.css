@@ -7,6 +7,10 @@ body {
     flex-direction: column;
 }
 
+h3{
+    color: black !important; 
+}
+
 .contenedor {
     max-width: 800px; /* Ajusta el ancho total */
     margin: 0 auto;

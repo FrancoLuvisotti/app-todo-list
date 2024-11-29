@@ -43,12 +43,15 @@ async function handleRegister(event) {
 
         // Manejar la respuesta
         if (response.ok) {
-            showAutoCloseModal('Registro exitoso. Ahora puedes iniciar sesión.', 'Exito');
+            //alert('Registro exitoso. Ahora puedes iniciar sesión.');
+            //alert('Registro exitoso. Ahora puedes iniciar sesión.');
+            alert('Registro exitoso. Ahora puedes iniciar sesión.');
+            //showAutoCloseModal('Registro exitoso. Ahora puedes iniciar sesión.', 'Exito');
             const modal = bootstrap.Modal.getInstance(document.getElementById('register-modal'));
             modal.hide(); // Cerrar el modal al registrarse exitosamente
         } else {
             const errorData = await response.json();
-            showAutoCloseModal(`Error: ${errorData.message}`, 'Error'); // Mostrar mensaje de error
+            //showAutoCloseModal(`Error: ${errorData.message}`, 'Error'); // Mostrar mensaje de error
             console.error('Error en el registro:', errorData); // Log de error para depuración
         }
     } catch (error) {

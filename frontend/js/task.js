@@ -268,36 +268,5 @@ async function deleteTask(taskId) {
         showAutoCloseModal('Ocurrió un error al eliminar la tarea. Intenta nuevamente.', 'Error');
     }
 }
-
-// Función para cerrar sesión
-// document.addEventListener("DOMContentLoaded", function () {
-//     const logoutButton = document.getElementById("logoutButton"); // Botón de cerrar sesión en tu navbar
-//     const confirmLogoutButton = document.getElementById("confirmLogout");
-  
-//     // Abre el modal al hacer clic en "Cerrar sesión"
-//     logoutButton.addEventListener("click", function (event) {
-//         event.preventDefault(); // Evita la acción predeterminada
-//         const logoutModal = new bootstrap.Modal(document.getElementById("logoutModal"));
-//         logoutModal.show();
-//     });
-  
-//     // Acciones para "Sí, cerrar sesión"
-//     confirmLogoutButton.addEventListener("click", function () {
-//       // Realiza el cierre de sesión (puede ser redirigiendo o limpiando tokens)
-//       // Aquí podrías agregar la lógica para cerrar sesión, como redirigir al login o eliminar el token de JWT
-//       // Eliminar jwt del localStorage
-//         localStorage.removeItem('jwtToken');
-//         // Redirigir a la página del login
-//         window.location.href = '../views/login.html';
-//     });
-// });
-
-function logout() {
-    // Eliminar jwt del localStorage
-    localStorage.removeItem('jwtToken');
-    // Redirigir a la página del login
-    window.location.href = './login.html';
-}
-
 // Al cargar la página, obtener las tareas
 document.addEventListener('DOMContentLoaded', fetchTasks);

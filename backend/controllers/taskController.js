@@ -90,7 +90,11 @@ const updateTask = async (req, res) => {
 
         task.title = title || task.title;
         task.description = description || task.description;
-        task.status = status || task.status;
+        task.status = 'pending' || task.status;
+        if(task.status === 'completed'){
+            task.status = 'pending';
+            task.completeAt = none;
+        }
 
         await task.save();
 

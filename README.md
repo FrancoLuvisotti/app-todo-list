@@ -35,8 +35,6 @@
 
 ## 🖥️ Capturas de pantalla
 
-> ⚠️ Agregá tus capturas en una carpeta `assets/` y actualizá las rutas aquí:
-
 - **Login**
   ![Login](assets/login.png)
 
@@ -48,7 +46,8 @@
 
 ---
 
-## 🌍 Demo en línea
+## 🌍 Demo en línea 
+(Aún en desarrollo)
 
 > Puede demorar unos segundos en cargar.
 

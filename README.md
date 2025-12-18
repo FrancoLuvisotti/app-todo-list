@@ -130,7 +130,6 @@ pendify/
 ## ✍️ Autor
 
 - **Franco Daniel Luvisotti Junco**  
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
 
 ---
 

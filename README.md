@@ -131,8 +131,3 @@ pendify/
 
 - **Franco Daniel Luvisotti Junco**  
 
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT.

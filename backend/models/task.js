@@ -23,9 +23,11 @@ const taskSchema = new mongoose.Schema({
         enum: ['pending', 'completed'],
         default: 'pending' // Estado predeterminado
     },
-}, {
-    timestamps: true // Agrega timestamps para createdAt y updatedAt
-});
+}, 
+    {
+        timestamps: true // Agrega timestamps para createdAt y updatedAt
+    }
+);
 
 // Exportar el modelo
 module.exports = mongoose.model('Task', taskSchema);

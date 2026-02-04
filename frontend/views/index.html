@@ -14,6 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container-fluid">
             <h2 class="navbar-brand">Lista de Tareas</h2>
+            <span id="navbar-username" class="me-3 fw-semibold"></span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +30,9 @@
                         <a class="nav-link" id="completed" href="#">Completadas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="user" href="#">Usuario</a>
+                        <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#profile-modal">
+                            Datos de Usuario
+                        </a>
                     </li>
                 </ul>
                 <button class="btn btn-danger ms-auto" id="logoutButton">Cerrar Sesión</button>

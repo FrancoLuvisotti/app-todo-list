@@ -11,6 +11,7 @@ const authenticate = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET); // Verificar el token
+        console.log('JWT DECODED:', decoded);
         req.userId = decoded.userId; // Almacenar el ID del usuario en el objeto de solicitud
         //req.params.id = decoded._id.toString();
         next(); // Continuar al siguiente middleware o ruta

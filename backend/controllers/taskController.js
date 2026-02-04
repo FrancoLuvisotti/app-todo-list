@@ -6,7 +6,6 @@ const createTask = async (req, res) => {
     try {
         const { title, description } = req.body;
         const userId = req.userId; // Obtenido del middleware de autenticación
-        //const taskId = req.params.id
 
         //Verifico que los datos sean recibidos
         //console.log('Datos recibidos en taskController crear tarea:', {title, description, userId, taskId});
@@ -17,7 +16,7 @@ const createTask = async (req, res) => {
 
         // Crear la nueva tarea asociada al usuario
         const newTask = new Task({
-            userId: userId,
+            userId,
             title,
             description,
             status: 'pending' // o como manejes el estado inicial

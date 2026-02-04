@@ -67,21 +67,41 @@ function displayTasks(tasks) {
         const taskItem = document.createElement('div');
         taskItem.className = 'card mb-3 d-flex flex-column';
 
+        let editedInfo = '';
+
+        if (new Date(task.updatedAt) > new Date(task.createdAt)) {
+            editedInfo = `Editada el ${moment(task.updatedAt).format('DD/MM/YYYY')}`;
+        }
+
+        const isCompleted = task.status === 'completed';
+
+        const completeButton = !isCompleted
+            ? `<button class="btn btn-success btn-sm" onclick="completeTask('${task._id}')">Completar</button>`
+            : '';
+
+        const cardClass = isCompleted
+            ? 'task-completed-card'
+            : 'task-pending-card';
+
+        taskItem.className = `card mb-3 d-flex flex-column ${cardClass}`;
+
         taskItem.innerHTML = `
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title ${task.status === 'completed' ? 'task-completed' : ''}">
+                <h5 class="card-title ${isCompleted ? 'task-completed' : ''}">
                     ${task.title} <br>
-                    <h6>
-                        Inicio: ${createdAt}<br><br>
-                        Finalizada: ${completedAt}
-                    </h6>
                 </h5>
+                <h6>
+                    Inicio: ${createdAt}<br><br>
+                    ${editedInfo ? editedInfo + '<br><br>' : ''}
+                    Finalizada: ${completedAt}
+                </h6>
+                
                 <p class="card-text">${task.description}</p>
                 <!--<span class="badge ${task.status === 'completed' ? 'bg-success' : 'bg-danger'}">
                     ${task.status === 'completed' ? 'Completada' : 'Pendiente'}
                 </span>-->
                 <div class="d-flex flex-wrap gap-2 mt-auto">
-                    <button class="btn btn-success btn-sm" onclick="completeTask('${task._id}')">Completar</button>
+                    ${completeButton}
                     <button class="btn btn-warning btn-sm" onclick="openEditModal('${task._id}', '${task.title}', '${task.description}')">Editar</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteTask('${task._id}')">Eliminar</button>
                 </div>
@@ -90,6 +110,34 @@ function displayTasks(tasks) {
         taskList.appendChild(taskItem);
     });
 }
+
+//Mensaje bienvenido en el nav
+async function loadNavbarUser() {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) return;
+
+    try {
+        const response = await fetch('http://localhost:5000/users/me', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) return;
+
+        const user = await response.json();
+
+        const nameEl = document.getElementById('navbar-username');
+        if (nameEl) {
+            nameEl.textContent = `Hola, ${user.username}`;
+        }
+
+    } catch (error) {
+        console.error('Error cargando usuario en navbar', error);
+    }
+}
+
+loadNavbarUser();
 
 const navLinks = document.querySelectorAll('.nav-link');
     

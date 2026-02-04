@@ -10,6 +10,7 @@ require('dotenv').config(); // Cargar variables de entorno desde .env
 
 const app = express();
 const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 5000 por defecto
+const userRoutes = require('./routes/userRoutes');
 
 // Middleware
 app.use(cors({
@@ -32,6 +33,7 @@ connectDB();
 // Rutas
 app.use('/auth', authRoutes); // Rutas de autenticación
 app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
+app.use('/users', userRoutes); //Ruta usuarios
 
 // Ruta de prueba
 app.get('/', (req, res) => {

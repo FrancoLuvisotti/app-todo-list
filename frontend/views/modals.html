@@ -94,39 +94,77 @@
 
         <div class="modal-body px-4 py-3">
             <form id="profile-form">
+                <div class="mb-3">
+                    <label class="form-label fw-medium">Usuario</label>
+                    <input type="text" class="form-control form-control-lg-lg" id="profile-username">
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-medium">Usuario</label>
-                <input type="text" class="form-control form-control-lg-lg" id="profile-username">
-            </div>
+                <div class="mb-3">
+                    <label class="form-label fw-medium">Email</label>
+                    <input type="email" class="form-control form-control-lg-lg" id="profile-email">
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-medium">Email</label>
-                <input type="email" class="form-control form-control-lg-lg" id="profile-email">
-            </div>
+                <hr class="my-4">
 
-            <hr class="my-4">
+                <h6 class="text-muted mb-3">Cambiar contraseña</h6>
 
-            <h6 class="text-muted mb-3">Cambiar contraseña</h6>
+                <div class="mb-3">
+                    <input type="password" class="form-control form-control-lg" id="current-password" placeholder="Contraseña actual">
+                </div>
 
-            <div class="mb-3">
-                <input type="password" class="form-control form-control-lg" id="current-password" placeholder="Contraseña actual">
-            </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control form-control-lg" id="new-password" placeholder="Nueva contraseña">
+                </div>
 
-            <div class="mb-3">
-                <input type="password" class="form-control form-control-lg" id="new-password" placeholder="Nueva contraseña">
-            </div>
+                <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
+                    Guardar cambios
+                </button>
 
-            <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
-                Guardar cambios
-            </button>
-
+                <button type="button" class="btn btn-danger w-100" id="delete-account-btn">
+                    Eliminar cuenta
+                </button>
+                <hr>
             </form>
         </div>
 
         </div>
     </div>
 </div>
+
+<!-- Modal de eliminar usuario -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Eliminar cuenta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-danger fw-bold">
+                    Esta acción es irreversible.
+                </p>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingresá tu contraseña</label>
+                    <input type="password" class="form-control" id="delete-account-password">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button class="btn btn-danger" id="confirmDeleteAccount">
+                    Eliminar cuenta
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal de alerta -->
 <!-- Modal de alerta genérico -->

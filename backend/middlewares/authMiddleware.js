@@ -1,22 +1,24 @@
-// Middleware para verificar
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || '123456';
 
 const authenticate = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Obtener el token del encabezado de autorización
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Token no proporcionado' });
     }
 
+    const token = authHeader.split(' ')[1];
+
     try {
-        const decoded = jwt.verify(token, JWT_SECRET); // Verificar el token
-        console.log('JWT DECODED:', decoded);
-        req.userId = decoded.userId; // Almacenar el ID del usuario en el objeto de solicitud
-        //req.params.id = decoded._id.toString();
-        next(); // Continuar al siguiente middleware o ruta
-    } catch (err) {
-        return res.status(401).json({ message: 'Token inválido.' });
+        const decoded = jwt.verify(token, JWT_SECRET);
+
+        req.userId = decoded.userId;
+        req.userRole = decoded.role;
+
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Token inválido' });
     }
 };
 

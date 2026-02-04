@@ -5,12 +5,13 @@ const taskRoutes = require('./routes/taskRoutes');
 const authRoutes = require('./routes/authRoutes');
 const bodyParser = require('body-parser');
 const authenticate = require('./middlewares/authMiddleware');
+const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 require('dotenv').config(); // Cargar variables de entorno desde .env
 
 const app = express();
 const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 5000 por defecto
-const userRoutes = require('./routes/userRoutes');
 
 // Middleware
 app.use(cors({
@@ -22,25 +23,32 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para parsear formularios URL-encoded
+
+app.use('/admin', adminRoutes);
 app.use((req, res, next) => {
     res.set('Cache-Control', 'no-store, no-caches, must-revalidate, private');
     next();
 })
 
 // Conectar a la base de datos MongoDB
-connectDB();
+connectDB().then(() => {
+    // Rutas
+    app.use('/auth', authRoutes); // Rutas de autenticación
+    app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
+    app.use('/users', userRoutes); //Ruta usuarios
+    app.use('/admin', adminRoutes);
 
-// Rutas
-app.use('/auth', authRoutes); // Rutas de autenticación
-app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
-app.use('/users', userRoutes); //Ruta usuarios
+    // Iniciar el servidor
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+});
 
 // Ruta de prueba
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = () => {
+    return mongoose.connect(process.env.MONGO_URI);
+};

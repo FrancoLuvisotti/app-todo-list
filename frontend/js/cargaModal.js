@@ -6,14 +6,110 @@ fetch('../views/modals.html')
 
         initializeLogoutModal();
         initializeProfileModal();
+        initializeRegisterModal();
     })
     .catch(error => console.error('Error al cargar modals.html:', error));
+
+// ---------- REGISTRO ----------
+function initializeRegisterModal() {
+    const registerForm = document.getElementById('register-form');
+
+    if (!registerForm) {
+        console.warn('El formulario de registro no se encuentra');
+        return;
+    }
+
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const body = {
+            username: document.getElementById('register-username').value,
+            email: document.getElementById('register-email').value,
+            password: document.getElementById('register-password').value
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                showAlert(data.message || 'Error al registrar usuario');
+                return;
+            }
+
+            showAlert('Usuario registrado correctamente');
+
+            bootstrap.Modal
+                .getInstance(document.getElementById('register-modal'))
+                .hide();
+
+        } catch (error) {
+            console.error('Error en registro:', error);
+            showAlert('Error del servidor');
+        }
+    });
+}
 
 
 // ---------- PERFIL ----------
 function initializeProfileModal() {
     const profileModalEl = document.getElementById('profile-modal');
     const profileForm = document.getElementById('profile-form');
+    const deleteBtn = document.getElementById('delete-account-btn');
+    const deleteModalEl = document.getElementById('deleteAccountModal');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteAccount');
+
+    //funcion eliminar usuario
+
+    deleteBtn.addEventListener('click', () => {
+    new bootstrap.Modal(deleteModalEl).show();
+    });
+
+    confirmDeleteBtn.addEventListener('click', async () => {
+        const password = document.getElementById('delete-account-password').value;
+        const token = localStorage.getItem('jwtToken');
+
+        if (!password) {
+            showAlert('Debes ingresar tu contraseña');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/users/me', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                showAlert(data.message);
+                return;
+            }
+
+            showAlert('Cuenta eliminada correctamente');
+
+            setTimeout(() => {
+                localStorage.removeItem('jwtToken');
+                window.location.href = './login.html';
+            }, 2000);
+
+        } catch (error) {
+            console.error(error);
+            showAlert('Error del servidor');
+        }
+    });
 
     if (!profileModalEl || !profileForm) {
         console.warn('Modal de perfil no existe');
@@ -22,7 +118,7 @@ function initializeProfileModal() {
 
     // 🟢 Al abrir el modal → cargar datos
     profileModalEl.addEventListener('show.bs.modal', async () => {
-        console.log('MODAL ABIERTO');
+        //console.log('MODAL ABIERTO');
 
         const token = localStorage.getItem('jwtToken');
         if (!token) return;
@@ -143,20 +239,24 @@ function initializeLogoutModal() {
 
     // ---------- ABRIR PERFIL ----------
     function openProfileModal() {
-    const modalEl = document.getElementById('profile-modal');
-    if (!modalEl) return;
+        const modalEl = document.getElementById('profile-modal');
+        if (!modalEl) return;
 
-    const modal = new bootstrap.Modal(modalEl);
-    modal.show();
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
 
-    function showAlert(message) {
+// ---------- ALERTA GLOBAL ----------
+function showAlert(message) {
     const modalBody = document.getElementById('alert-modal-body');
+    if (!modalBody) {
+        alert(message); // fallback por si el modal no existe
+        return;
+    }
+
     modalBody.textContent = message;
 
-    const alertModal = new bootstrap.Modal(
-        document.getElementById('alert-modal')
-    );
+    const alertModalEl = document.getElementById('alert-modal');
+    const alertModal = new bootstrap.Modal(alertModalEl);
     alertModal.show();
-}
-
 }

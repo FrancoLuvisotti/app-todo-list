@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const User = require('../models/user'); // Modelo de usuario
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 const JWT_SECRET = process.env.JWT_SECRET || '123456';
@@ -30,19 +30,31 @@ router.post('/register', async (req, res) => {
         return res.status(400).json({ message: 'Ya existe un usuario con el mismo email' });
         }
 
+        // Verificar si ya existe un ADMIN
+        if (req.body.role === 'ADMIN') {
+            return res.status(403).json({ message: 'No se puede crear un ADMIN' });
+        }
+
         // Crear un nuevo usuario 
         const newUser = new User({
-        username,
-        email,
-        password: hashPassword,
-        role: 'USER' 
+            username,
+            email,
+            password: hashPassword,
+            role: 'USER'
         });
 
         // Guardar el nuevo usuario en la base de datos
         const savedUser = await newUser.save();
 
         //Crear Token JWT
-        const token = jwt.sign({userId:savedUser._id, email:savedUser.email}, JWT_SECRET, {expiresIn:'1h'});
+        const token = jwt.sign({
+            userId: savedUser._id,
+            role: savedUser.role,
+            email: savedUser.email
+            },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         res.status(201).json({ message: 'Usuario registrado con exito',token });
     } catch (err) {
@@ -53,35 +65,48 @@ router.post('/register', async (req, res) => {
 
     // POST - Ruta para el inicio de sesión
     router.post('/login', async (req, res) => {
-        const { email, password } = req.body;
+    const { email, password } = req.body;
 
-        // Verificación de los campos requeridos
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Ingrese email y contraseña' });
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Ingrese email y contraseña' });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'Email o contraseña incorrectos' });
         }
 
-        try {
-            // Buscar al usuario por su correo electrónico
-            const user = await User.findOne({ email });
-            if (!user) {
-                return res.status(401).json({ message: 'Email o contraseña incorrectos' });
-            }
+        if (user.status === 'SUSPENDED') {
+            return res.status(403).json({ message: 'Cuenta suspendida' });
+        }
 
-            // Comparar la contraseña ingresada con la almacenada hasheada
-            const match = await bcrypt.compare(password, user.password);
-            if(match){
-                // Si la contraseña coincide, generar token JWT
-                const token = jwt.sign({userId:user._id, email:user.email}, JWT_SECRET, {expiresIn:'1h'});
+        if (user.status === 'DELETED') {
+            return res.status(403).json({ message: 'Cuenta eliminada' });
+        }
 
-                res.status(201).json({ message: 'Ingreso con exito',token });
-            }else{
-                res.status(500).json({ message: 'Contraseña incorrecta'});
-            }
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+        }
 
-    } catch (err) {
-        res.status(500).json({ message: 'Error al logear', error: err });
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                role: user.role,
+                email: user.email
+            },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.json({ token });
+
+    } catch (error) {
+        console.error('Error login:', error);
+        res.status(500).json({ message: 'Error del servidor' });
     }
-    });
+});
 
 
 module.exports = router;

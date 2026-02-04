@@ -15,49 +15,46 @@ function showAutoCloseModal(message, title = "Mensaje") {
 
 // Función para manejar el inicio de sesión
 async function handleLogin(event) {
-    event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+    event.preventDefault();
 
-    // Obtener los valores del formulario
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    // Validación simple de los campos
     if (!email || !password) {
-        showAutoCloseModal('Por favor, completa todos los campos.', 'Error');
+        showAutoCloseModal('Completa todos los campos', 'Error');
         return;
     }
 
-    // Crear el objeto de datos para enviar
-    const loginData = { email, password };
-    //console.log('Enviando datos de login', loginData);
-
     try {
-        // Hacer la solicitud de inicio de sesión al backend
         const response = await fetch('http://localhost:5000/auth/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
         });
-        //console.log('Respuesta del servidor', response);
 
-        // Manejar la respuesta
-        if (response.ok) {
-            const data = await response.json();
-            const token = data.token; // Obtener el token JWT
-            localStorage.setItem('jwtToken', token); // Guardar el token en localStorage
-            showAutoCloseModal('Inicio de sesión exitoso!', 'Exito');
-            window.location.href = '../views/index.html'; // Redirigir a la página principal
-        } else {
-            const errorData = await response.json();
-            showAutoCloseModal(`Error: ${errorData.message}`, 'Error'); // Mostrar mensaje de error
+        const data = await response.json();
+
+        if (!response.ok) {
+            showAutoCloseModal(data.message, 'Error');
+            return;
         }
+
+        localStorage.setItem('jwtToken', data.token);
+
+        const user = getUserFromToken();
+
+        if (user.role === 'ADMIN') {
+            window.location.href = '../views/admin.html';
+        } else {
+            window.location.href = '../views/index.html';
+        }
+
     } catch (error) {
-        console.error('Error en la solicitud:', error);
-        showAutoCloseModal('Ocurrió un error al iniciar sesión. Intenta nuevamente.', 'Error');
+        console.error(error);
+        showAutoCloseModal('Error del servidor', 'Error');
     }
 }
+
 
 // Añadir el evento al formulario de inicio de sesión
 document.addEventListener('DOMContentLoaded', () => {

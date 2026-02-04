@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        //unique: true,
     },
     email: {
         type: String,
@@ -21,6 +20,11 @@ const userSchema = new mongoose.Schema({
         enum: ['USER', 'ADMIN'],
         default: 'USER',
     },
+    status: {
+        type: String,
+        enum: ['ACTIVE', 'SUSPENDED', 'DELETED'],
+        default: 'ACTIVE'
+    }
 },
     // createdAt: { solo guarda fecha de creacion
     //     type: Date,

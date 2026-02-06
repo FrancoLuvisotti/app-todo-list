@@ -13,6 +13,8 @@ const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const autoSuspendInactiveUsers = require('./services/autoSuspendUsers');
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -85,6 +87,10 @@ app.get('/', (req, res) => {
  //🔌 DB + Server
 ===================== */
 connectDB();
+
+connectDB().then(() => {
+    autoSuspendInactiveUsers();
+});
 
 app.listen(PORT, () => {
     console.log(`🔥 Server running on http://localhost:${PORT}`);

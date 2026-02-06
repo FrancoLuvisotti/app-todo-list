@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['ACTIVE', 'SUSPENDED', 'DELETED'],
         default: 'ACTIVE'
+    },
+    lastLoginAt: Date,
+    suspensionReason: {
+        type: String,
+        enum: ['INACTIVITY', 'MANUAL', null],
+        default: null
     }
 },
     // createdAt: { solo guarda fecha de creacion

@@ -78,6 +78,9 @@ const login = async (req, res) => {
 
         res.json({ token });
 
+        user.lastLoginAt = new Date();
+        await user.save();
+
     } catch (error) {
         console.error('Error login:', error);
         res.status(500).json({ message: 'Error del servidor' });

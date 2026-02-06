@@ -87,6 +87,7 @@ function renderUsers(users) {
                     ${user.status}
                 </span>
             </td>
+            <td>${formatInactivity(user)}</td>
             <td>${user.tasksCount}</td>
             <td>
                 ${renderActions(user)}
@@ -187,4 +188,20 @@ document.getElementById('nextPage').addEventListener('click', () => {
         loadUsers();
     }
 });
+
+function formatInactivity(user) {
+    if (user.status === 'SUSPENDED' && user.suspensionReason === 'INACTIVITY') {
+        return `<span class="badge bg-danger">
+            Inactivo ${user.daysInactive} días
+        </span>`;
+    }
+
+    if (user.daysInactive !== null) {
+        return `<span class="text-muted">
+            ${user.daysInactive} días
+        </span>`;
+    }
+
+    return `<span class="text-muted">—</span>`;
+}
 

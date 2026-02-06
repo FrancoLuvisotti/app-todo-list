@@ -2,7 +2,7 @@ const User = require('../models/user');
 const Task = require('../models/task');
 
 /* =========================
-   Helpers
+ //  Helpers
 ========================= */
 const countActiveAdmins = async () => {
     return User.countDocuments({
@@ -12,35 +12,85 @@ const countActiveAdmins = async () => {
 };
 
 /* =========================
-   Controllers
+  // Controllers
 ========================= */
+const INACTIVE_DAYS = 1;
+
 const getAllUsers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
+        const statusFilter = req.query.status || 'ALL';
 
-        const totalUsers = await User.countDocuments();
+        const now = new Date();
+        const inactiveLimitDate = new Date();
+        inactiveLimitDate.setDate(now.getDate() - INACTIVE_DAYS);
 
-        const users = await User.find()
-            .select('-password -__v')
-            .skip(skip)
-            .limit(limit)
-            .sort({ createdAt: -1 });
+        /* =========================
+        //   Match dinámico
+        ========================= */
+        const match = {};
 
-        const usersWithTasks = await Promise.all(
-            users.map(async user => ({
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-                tasksCount: await Task.countDocuments({ user: user._id })
-            }))
-        );
+        if (statusFilter === 'ACTIVE') {
+            match.status = 'ACTIVE';
+        }
+
+        if (statusFilter === 'SUSPENDED') {
+            match.status = 'SUSPENDED';
+        }
+
+        if (statusFilter === 'INACTIVE') {
+            match.status = 'ACTIVE';
+            match.lastLoginAt = { $lt: inactiveLimitDate };
+        }
+
+        const users = await User.aggregate([
+            { $match: match },
+            { $sort: { createdAt: -1 } },
+            { $skip: skip },
+            { $limit: limit },
+
+            {
+                $lookup: {
+                    from: 'tasks',
+                    localField: '_id',
+                    foreignField: 'userId',
+                    as: 'tasks'
+                }
+            },
+            {
+                $addFields: {
+                    tasksCount: { $size: '$tasks' },
+                    daysInactive: {
+                        $cond: [
+                            { $ifNull: ['$lastLoginAt', false] },
+                            {
+                                $floor: {
+                                    $divide: [
+                                        { $subtract: [now, '$lastLoginAt'] },
+                                        1000 * 60 * 60 * 24
+                                    ]
+                                }
+                            },
+                            null
+                        ]
+                    }
+                }
+            },
+            {
+                $project: {
+                    password: 0,
+                    __v: 0,
+                    tasks: 0
+                }
+            }
+        ]);
+
+        const totalUsers = await User.countDocuments(match);
 
         res.json({
-            users: usersWithTasks,
+            users,
             totalUsers,
             totalPages: Math.ceil(totalUsers / limit),
             currentPage: page

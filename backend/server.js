@@ -1,54 +1,91 @@
 const express = require('express');
-const connectDB = require('./config/database');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
+const mongoSanitize = require('express-mongo-sanitize');
 const cors = require('cors');
-const taskRoutes = require('./routes/taskRoutes');
-const authRoutes = require('./routes/authRoutes');
-const bodyParser = require('body-parser');
+require('dotenv').config();
+
+const connectDB = require('./config/database');
 const authenticate = require('./middlewares/authMiddleware');
+
+const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
-require('dotenv').config(); // Cargar variables de entorno desde .env
-
 const app = express();
-const PORT = process.env.PORT || 5000; // Usa el puerto definido en .env o el 5000 por defecto
+const PORT = process.env.PORT || 5000;
 
-// Middleware
+/* =====================
+// 📦 Parsers
+===================== */
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+/* =====================
+// 🔐 Seguridad global
+===================== */
+
+// CORS controlado
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', //URl del frontend
+    origin: 'http://127.0.0.1:5500',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Para parsear formularios URL-encoded
+// Headers seguros
+app.use(helmet());
 
-app.use('/admin', adminRoutes);
-app.use((req, res, next) => {
-    res.set('Cache-Control', 'no-store, no-caches, must-revalidate, private');
-    next();
-})
+// Anti XSS
+app.use(xss());
 
-// Conectar a la base de datos MongoDB
-connectDB().then(() => {
-    // Rutas
-    app.use('/auth', authRoutes); // Rutas de autenticación
-    app.use('/tasks', authenticate, taskRoutes); // Rutas de tareas
-    app.use('/users', userRoutes); //Ruta usuarios
-    app.use('/admin', adminRoutes);
-
-    // Iniciar el servidor
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
+// Rate limit global
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 10, // 10 intentos
+    message: {
+        message: 'Demasiados intentos, probá más tarde'
+    }
 });
 
-// Ruta de prueba
+// Anti NoSQL Injection
+app.use(mongoSanitize({
+    replaceWith: '_'
+}));
+
+// No cache
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+});
+
+
+/* =====================
+ //🚀 Rutas
+===================== */
+app.use('/auth/login', authLimiter);
+app.use('/auth/register', authLimiter);
+app.use('/auth', authRoutes);
+app.use('/tasks', authenticate, taskRoutes);
+app.use('/users', userRoutes);
+app.use('/admin', adminRoutes);
+
+app.use((err, req, res, next) => {
+    console.error('🔥 Error no manejado:', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+});
+
+// Health check
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-module.exports = () => {
-    return mongoose.connect(process.env.MONGO_URI);
-};
+/* =====================
+ //🔌 DB + Server
+===================== */
+connectDB();
+
+app.listen(PORT, () => {
+    console.log(`🔥 Server running on http://localhost:${PORT}`);
+});

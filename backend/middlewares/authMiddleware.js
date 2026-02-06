@@ -8,6 +8,13 @@ const authenticate = (req, res, next) => {
         return res.status(401).json({ message: 'Token no proporcionado' });
     }
 
+    // if (req.user.status !== 'ACTIVE') {
+    //     return res.status(403).json({
+    //     message: 'Usuario bloqueado'
+    //     });
+    // }
+
+
     const token = authHeader.split(' ')[1];
 
     try {

@@ -1,6 +1,5 @@
 const Task = require('../models/task')
 const mongoose = require('mongoose');
-
 // Crear una tarea
 const createTask = async (req, res) => {
     try {
@@ -89,10 +88,10 @@ const updateTask = async (req, res) => {
 
         task.title = title || task.title;
         task.description = description || task.description;
-        task.status = 'pending' || task.status;
+        if (status) task.status = status;
         if(task.status === 'completed'){
             task.status = 'pending';
-            task.completeAt = none;
+            task.completeAt = null;
         }
 
         await task.save();

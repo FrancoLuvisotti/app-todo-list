@@ -1,6 +1,8 @@
 let currentPage = 1;
 const limit = 5;
 let totalPages = 1;
+const API_URL = 'https://app-todo-list-frontend.onrender.com';
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -31,7 +33,8 @@ async function loadUsers() {
 
     try {
         const res = await fetch(
-            `http://localhost:5000/admin/users?page=${currentPage}&limit=${limit}`,
+            `${API_URL}/admin/users?page=${currentPage}&limit=${limit}`, //con render
+            //`http://localhost:5000/admin/users?page=${currentPage}&limit=${limit}`, //local
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -152,7 +155,8 @@ async function adminAction(userId, action) {
 
     try {
         const res = await fetch(
-            `http://localhost:5000/admin/users/${userId}/${action}`,
+            `${API_URL}/admin/users/${userId}/${action}`, //render
+            //`http://localhost:5000/admin/users/${userId}/${action}`, //local
             {
                 method: 'PUT',
                 headers: {

@@ -1,4 +1,6 @@
 // Cargar contenido de los modales
+const API_URL = 'https://app-todo-list-frontend.onrender.com';
+
 fetch('../views/modals.html')
     .then(response => response.text())
     .then(data => {
@@ -29,7 +31,10 @@ function initializeRegisterModal() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/auth/register', {
+            const response = await fetch(
+                `${API_URL}/auth/register`, //render
+                //'http://localhost:5000/auth/register', //local
+            {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -82,7 +87,10 @@ function initializeProfileModal() {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/users/me', {
+            const response = await fetch(
+                `${API_URL}/users/me`, //render
+                //'http://localhost:5000/users/me', //local
+                {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -124,7 +132,10 @@ function initializeProfileModal() {
         if (!token) return;
 
         try {
-            const response = await fetch('http://localhost:5000/users/me', {
+            const response = await fetch(
+                `${API_URL}/users/me`, //render
+                //'http://localhost:5000/users/me', //local
+                {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -169,7 +180,10 @@ function initializeProfileModal() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/users/me', {
+        const response = await fetch(
+            `${API_URL}/users/me`, //render
+            //'http://localhost:5000/users/me', //local
+            {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

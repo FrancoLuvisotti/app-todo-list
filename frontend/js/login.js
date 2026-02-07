@@ -1,3 +1,4 @@
+const API_URL = 'https://app-todo-list-frontend.onrender.com';
 function showAutoCloseModal(message, title = "Mensaje") {
     // Configurar el contenido del modal
     document.getElementById('alertModalLabel').textContent = title;
@@ -26,7 +27,10 @@ async function handleLogin(event) {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/auth/login', {
+        const response = await fetch(
+            `${API_URL}/auth/login`, //render
+            //'http://localhost:5000/auth/login', //local
+            {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

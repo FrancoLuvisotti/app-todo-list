@@ -1,3 +1,4 @@
+const API_URL = 'https://app-todo-list-frontend.onrender.com';
 function showAutoCloseModal(message, title = "Mensaje") {
     // Configurar el contenido del modal
     document.getElementById('alertModalLabel').textContent = title;
@@ -24,7 +25,10 @@ async function fetchTasks() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/tasks', {
+        const response = await fetch(
+            `${API_URL}/tasks`, //render
+            //'http://localhost:5000/tasks',  //local
+            {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -117,7 +121,10 @@ async function loadNavbarUser() {
     if (!token) return;
 
     try {
-        const response = await fetch('http://localhost:5000/users/me', {
+        const response = await fetch(
+            `${API_URL}/users/me`,
+            //'http://localhost:5000/users/me',  //render
+            {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -184,7 +191,10 @@ async function addTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch('http://localhost:5000/tasks', {
+        const response = await fetch(
+            `${API_URL}/tasks`,    //render
+            //'http://localhost:5000/tasks', //local
+            {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,7 +227,10 @@ async function completeTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}/complete`, {
+        const response = await fetch(
+            `${API_URL}/tasks/${taskId}/complete`, //render
+            //`http://localhost:5000/tasks/${taskId}/complete`, //local
+            {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -264,7 +277,10 @@ async function editTask(event) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        const response = await fetch(
+            `${API_URL}/tasks/${taskId}`, //render
+            //`http://localhost:5000/tasks/${taskId}`, //local
+            {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -297,7 +313,10 @@ async function deleteTask(taskId) {
     const token = localStorage.getItem('jwtToken') // Obtener el token desde localStorage
 
     try {
-        const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        const response = await fetch(
+            `${API_URL}/tasks/${taskId}`, //render
+            //`http://localhost:5000/tasks/${taskId}`, //local
+            {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}` // Incluyendo el token JWT

@@ -31,7 +31,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS controlado
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: [
+        'http://127.0.0.1:5500',
+        'http://localhost:5500',
+        'https://app-todo-list-frontend.onrender.com'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));

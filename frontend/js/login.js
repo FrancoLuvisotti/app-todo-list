@@ -1,4 +1,3 @@
-const API_URL = 'https://app-todo-list-frontend.onrender.com';
 function showAutoCloseModal(message, title = "Mensaje") {
     // Configurar el contenido del modal
     document.getElementById('alertModalLabel').textContent = title;

@@ -1,8 +1,6 @@
 let currentPage = 1;
 const limit = 5;
 let totalPages = 1;
-const API_URL = 'https://app-todo-list-frontend.onrender.com';
-
 
 document.addEventListener('DOMContentLoaded', () => {
 

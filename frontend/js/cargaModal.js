@@ -1,5 +1,4 @@
 // Cargar contenido de los modales
-const API_URL = 'https://app-todo-list-frontend.onrender.com';
 
 fetch('../views/modals.html')
     .then(response => response.text())

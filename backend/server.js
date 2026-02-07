@@ -49,7 +49,7 @@ app.use(xss());
 // Rate limit global
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
-    max: 10, // 10 intentos
+    max: 2000, // 10 intentos
     message: {
         message: 'Demasiados intentos, probá más tarde'
     }

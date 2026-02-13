@@ -29,9 +29,31 @@
                                     <input type="email" class="form-control" id="login-email" placeholder="tuemail@ejemplo.com" required>
                                     <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="login-password" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="login-password" required>
+                                <div class="mb-3 position-relative">
+                                    <label for="password" class="form-label">Contraseña</label>
+
+                                    <input 
+                                        type="password" 
+                                        class="form-control pe-5" 
+                                        id="login-password" 
+                                        name="password"
+                                        required
+                                    >
+
+                                    <!-- Icono overlay -->
+                                    <span 
+                                        class="password-toggle position-absolute top-50 end-0 translate-middle-y me-3"
+                                        data-target="login-password"
+                                        style="cursor: pointer;"
+                                    >
+                                        <i class="bi bi-eye"></i>
+                                    </span>
+
+                                    <!-- Indicador fuerza -->
+                                    <div class="progress mt-2" style="height: 6px;">
+                                        <div id="password-strength-bar" class="progress-bar" role="progressbar"></div>
+                                    </div>
+                                    <small id="password-strength-text" class="form-text"></small>
                                     <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Ingresar</button>

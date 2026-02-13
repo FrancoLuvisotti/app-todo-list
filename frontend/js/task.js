@@ -121,8 +121,8 @@ async function loadNavbarUser() {
 
     try {
         const response = await fetch(
-            `${API_URL}/users/me`,
-            //'http://localhost:5000/users/me',  //render
+            `${API_URL}/users/me`,//render
+            //'http://localhost:5000/users/me',  //local
             {
             headers: {
                 Authorization: `Bearer ${token}`

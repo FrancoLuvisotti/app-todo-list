@@ -58,6 +58,53 @@ async function handleLogin(event) {
     }
 }
 
+// Toggle mostrar / ocultar contraseña
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ===== LOGIN FORM =====
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // ===== PASSWORD STRENGTH =====
+    const passwordInput = document.getElementById("login-password");
+    const strengthBar = document.getElementById("password-strength-bar");
+    const strengthText = document.getElementById("password-strength-text");
+
+    if (passwordInput && strengthBar && strengthText) {
+
+        passwordInput.addEventListener("input", function () {
+            const value = passwordInput.value;
+            let score = 0;
+
+            if (value.length >= 8) score++;
+            if (/[A-Z]/.test(value)) score++;
+            if (/[0-9]/.test(value)) score++;
+            if (/[^A-Za-z0-9]/.test(value)) score++;
+
+            updateStrengthUI(score);
+        });
+
+        function updateStrengthUI(score) {
+            const levels = ["Muy débil", "Débil", "Media", "Fuerte"];
+            const colors = ["bg-danger", "bg-warning", "bg-info", "bg-success"];
+
+            strengthBar.className = "progress-bar";
+            strengthBar.style.width = (score * 25) + "%";
+
+            if (score === 0) {
+                strengthText.textContent = "";
+                strengthBar.style.width = "0%";
+                return;
+            }
+
+            strengthBar.classList.add(colors[score - 1]);
+            strengthText.textContent = levels[score - 1];
+        }
+    }
+
+});
 
 // Añadir el evento al formulario de inicio de sesión
 document.addEventListener('DOMContentLoaded', () => {
